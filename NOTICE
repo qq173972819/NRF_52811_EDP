@@ -1,0 +1,58 @@
+NRF_52811_EDP
+Copyright 2026 qq173972819
+
+本项目为自己的墨水屏固件代码选择 Apache-2.0（与 edp_wx_bt_52811 下绝大部分
+源文件已有的 SPDX-License-Identifier 保持一致）。本仓库同时包含若干第三方代码，
+它们的许可条款各自适用，不因本项目整体采用 Apache-2.0 而改变。
+
+
+== 一、本项目自有代码（Apache-2.0） ==
+
+范围：edp_wx_bt_52811/ 下除“第三方”一节所列的全部源文件，含
+
+    src/ble/         src/protocol/     src/epd/epd_154d.c(.h)
+    src/led/         src/power/        src/battery/      src/main.c
+    boards/my_nrf52811/                tests/
+    app_config.h     CMakeLists.txt    prj.conf
+
+这些文件带有 SPDX-License-Identifier: Apache-2.0 头。完整条款见 LICENSE 文件。
+
+其中 src/epd/epd_154d_core.c / .h（屏幕驱动核心）由前序项目引入，同样以
+Apache-2.0 授权，故与本项目整体许可一致。
+
+
+== 二、第三方组件 ==
+
+1) Bosch Sensortec BMP581 驱动 —— BSD-3-Clause
+   路径：edp_wx_bt_52811/src/APP/app_bmp581/bosch/
+
+       Copyright (c) 2022 Bosch Sensortec GmbH. All rights reserved.
+
+   BSD-3-Clause 授权，要求保留上述版权声明、许可条件与免责声明，
+   且未经书面许可不得以版权所有者或其贡献者的名义为衍生产品背书。
+   该组件的再分发必须沿用 BSD-3-Clause，不受本项目 Apache-2.0 影响。
+
+   注：此部分为早期 beacon 阶段遗留代码，未在 CMakeLists.txt 中编译，
+   仅为保留历史而留存。
+
+2) Nordic Semiconductor Zephyr 示例 —— Apache-2.0
+   路径：edp_wx_bt_52811/src/APP/app_beacon/ 及相关 beacon 脚手架
+
+   固件最初由 Nordic 的 Zephyr beacon 示例改造而来，沿用其 Apache-2.0 授权。
+
+3) Zephyr 构建产物中链接的上游代码
+   构建时由 nRF Connect SDK / Zephyr 引入（BT host、驱动框架等），
+   其许可由 NCS 自身的 LICENSES/ 目录与 west.yml 清单规定，不在本仓库内重复。
+
+
+== 三、许可状态待确认：edp_html（Web 上位机） ==
+
+   edp_html/ 下的网页端源自社区“墨水屏日历”项目，并在此基础上增量修改。
+   原项目在本仓库副本中**未携带任何版权或许可声明**（已全目录检索，
+   无 LICENSE 文件、无 SPDX 头、无版权注释），因此：
+
+   - 该目录**不适用**根 LICENSE 的 Apache-2.0 条款；
+   - 上游真实授权条款未知，使用者须自行确认后再行再分发或商用。
+
+   若您是该部分的权利人、或知悉其上游许可信息，请通过仓库 Issue 联系，
+   我方将补齐归属声明或应要求下架。

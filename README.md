@@ -215,4 +215,19 @@ LED 显示层原来只在「模式发生变化」时才排工作项写引脚，�
 
 ## License
 
-固件 `edp_wx_bt_52811` 基于 Nordic 的 Zephyr beacon 示例改造，`src/epd/` 下的屏幕驱动核心来自 bsides 项目；`edp_html` 上位机源自社区项目。请遵循各自原始许可。
+根目录 `LICENSE` = **Apache-2.0**，适用于 `edp_wx_bt_52811/` 下本项目自有编写的代码（这些源文件本身也带 `SPDX-License-Identifier: Apache-2.0` 头）。
+
+**例外是第三方代码——它们的原始条款继续有效，不因本项目采用 Apache-2.0 而改变。** 完整归属与条款说明见 `NOTICE`，要点：
+
+| 组件 | 许可 | 位置 |
+|---|---|---|
+| 本项目固件代码 | Apache-2.0 | `edp_wx_bt_52811/src/`（除下两项） |
+| Bosch BMP581 驱动 | **BSD-3-Clause** | `src/APP/app_bmp581/bosch/` |
+| Zephyr beacon 示例 | Apache-2.0 | `src/APP/app_beacon/` |
+| Web 上位机 | **未知（待确认）** | `edp_html/` |
+
+### ⚠️ 关于 `edp_html/` 的提醒
+
+网页端源自社区「墨水屏日历」项目，仓库副本内**没有任何来自上游的版权或许可声明**（已全目录检索：无 LICENSE、无 SPDX 头、无版权注释）。因此它**不适用**根 LICENSE 的 Apache-2.0 条款，再分发或商用前请自行确认上游授权。若你是权利人，请开 Issue 联系，我会补齐归属或下架。
+
+> 之所以没整体采用 MIT：固件源码已有 58 个文件带 Apache-2.0 的 SPDX 头，再标 MIT 会造成声明冲突；而 Bosch 驱动是 BSD-3-Clause，要求保留原条款。现状是自洽的最小改动方案。
