@@ -1,0 +1,43 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+
+#include <zephyr/dt-bindings/adc/adc.h>
+#include <zephyr/dt-bindings/gpio/gpio.h>
+
+/ {
+	aliases {
+		led0 = &power_test_led;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		power_test_led: power-test-led {
+			gpios = <&gpio0 1 GPIO_ACTIVE_HIGH>;
+		};
+	};
+
+	power_test_adc: adc {
+		compatible = "zephyr,adc-emul";
+		nchannels = <1>;
+		ref-internal-mv = <600>;
+		#io-channel-cells = <1>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		status = "okay";
+
+		channel@0 {
+			reg = <0>;
+			zephyr,gain = "ADC_GAIN_1_6";
+			zephyr,reference = "ADC_REF_INTERNAL";
+			zephyr,vref-mv = <600>;
+			zephyr,acquisition-time =
+				<ADC_ACQ_TIME(ADC_ACQ_TIME_MICROSECONDS, 40)>;
+			zephyr,resolution = <12>;
+			zephyr,oversampling = <8>;
+		};
+	};
+
+	zephyr,user {
+		io-channels = <&power_test_adc 0>;
+	};
+};

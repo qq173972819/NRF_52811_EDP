@@ -1,0 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
+
+config BOARD_MY_NRF52811
+	select SOC_NRF52811_QFAA if BOARD_MY_NRF52811_NRF52811

@@ -1,0 +1,21 @@
+description: GDEM0154F51H 1.54-inch 200x200 four-color e-paper display
+
+compatible: "gooddisplay,epd-154d"
+
+include: spi-device.yaml
+
+properties:
+  dc-gpios:
+    type: phandle-array
+    required: true
+    description: Data/command select GPIO.
+
+  reset-gpios:
+    type: phandle-array
+    required: true
+    description: Active-high display reset GPIO.
+
+  busy-gpios:
+    type: phandle-array
+    required: true
+    description: Active-low busy GPIO.

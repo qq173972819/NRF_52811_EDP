@@ -1,0 +1,5 @@
+tests:
+  app.beacon_parser:
+    tags:
+      - beacon
+      - parser

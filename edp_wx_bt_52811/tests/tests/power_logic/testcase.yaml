@@ -1,0 +1,8 @@
+tests:
+  power.logic:
+    tags:
+      - power
+      - battery
+      - led
+    platform_allow:
+      - qemu_cortex_m3

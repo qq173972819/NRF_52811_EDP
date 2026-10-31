@@ -1,0 +1,10 @@
+sample:
+  name: nRF52811 E-Paper BLE Peripheral
+tests:
+  sample.bluetooth.nrf52811_epd:
+    harness: bluetooth
+    platform_allow:
+      - my_nrf52811
+    tags: bluetooth
+    integration_platforms:
+      - my_nrf52811

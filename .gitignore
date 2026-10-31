@@ -1,0 +1,38 @@
+# ================== Zephyr / 编译产物 ==================
+# 27MB × 2 个构建目录，含 cmake 缓存、ninja 日志、elf/hex 产物
+/edp_wx_bt_52811/build/
+/edp_wx_bt_52811/build_epd_6275/
+
+# ================== IDE / 编辑器 / AI 工具缓存 ==================
+.history/
+.mimocode/
+.vscode/
+.idea/
+ninja_out*.log
+
+# ================== WorkBuddy 工作区数据 ==================
+# 含项目记忆笔记，属本地私有数据
+.workbuddy/
+.worktrees/
+
+# ================== 大文件：PCB 3D 模型（约 31MB）==================
+# 超出 GitHub 建议的单文件体积，会让每次 clone 变慢
+*.step
+*.STEP
+
+# ================== 嵌套 git 仓库 ==================
+# edp_wx_bt_52811 自带一个 .git（beacon 阶段的 4 个 commit）。
+# 必须排除：保留它会导致该目录被当作 gitlink 入库，
+# 推送后远程看到的是空目录（所有源文件丢失）。
+# 该仓库已备份到项目外的 ../_backup_edp_wx_bt_52811_git/
+/edp_wx_bt_52811/.git/
+
+# ================== 第三方参考项目 ==================
+# 从 GitHub 下载的 zip 副本（目录名带 -master 后缀），非本项目代码
+/stm32_nfc_lite-master/
+/wx_epaper_lite-master/
+
+# ================== 系统杂项 ==================
+Thumbs.db
+desktop.ini
+.DS_Store

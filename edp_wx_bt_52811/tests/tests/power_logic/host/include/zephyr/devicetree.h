@@ -1,0 +1,18 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+
+#ifndef POWER_LOGIC_HOST_ZEPHYR_DEVICETREE_H_
+#define POWER_LOGIC_HOST_ZEPHYR_DEVICETREE_H_
+
+#define HOST_DT_PATH_ZEPHYR_USER 101U
+#define HOST_DT_ALIAS_LED0 202U
+#define HOST_DT_PROP_GPIOS 303U
+
+#define DT_PATH(name) DT_PATH_RESOLVE(name)
+#define DT_PATH_RESOLVE(name) DT_PATH_##name
+#define DT_PATH_zephyr_user HOST_DT_PATH_ZEPHYR_USER
+
+#define DT_ALIAS(name) DT_ALIAS_RESOLVE(name)
+#define DT_ALIAS_RESOLVE(name) DT_ALIAS_##name
+#define DT_ALIAS_led0 HOST_DT_ALIAS_LED0
+
+#endif /* POWER_LOGIC_HOST_ZEPHYR_DEVICETREE_H_ */

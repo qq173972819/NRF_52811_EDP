@@ -1,0 +1,6 @@
+board:
+  name: my_nrf52811
+  full_name: Custom nRF52811 EPD Board
+  vendor: nordic
+  socs:
+    - name: nrf52811

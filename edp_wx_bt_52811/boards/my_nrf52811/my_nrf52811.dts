@@ -1,0 +1,123 @@
+/*
+ * Custom nRF52811 board with GDEM0154F51H 1.54-inch 4-color EPD.
+ *
+ * EPD:
+ *   BAT ADC: P0.02
+ *   MOSI:    P0.08
+ *   CLK:     P0.07
+ *   CS:      P0.06
+ *   DC:      P0.05
+ *   RST:     P0.04
+ *   BUSY:    P0.03
+ * Status LED:
+ *   LED:     P0.11, active low
+ */
+
+/dts-v1/;
+#include <nordic/nrf52811_qfaa.dtsi>
+#include <zephyr/dt-bindings/adc/adc.h>
+#include <zephyr/dt-bindings/adc/nrf-saadc.h>
+#include <zephyr/dt-bindings/gpio/gpio.h>
+#include <zephyr/dt-bindings/spi/spi.h>
+#include "my_nrf52811-pinctrl.dtsi"
+
+/ {
+	model = "Custom nRF52811 EPD Board";
+	compatible = "custom,my-nrf52811";
+
+	chosen {
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+	};
+
+	zephyr,user {
+		io-channels = <&adc 0>;
+	};
+
+	aliases {
+		led0 = &sysled;
+		epd0 = &epd154d;
+		bat-adc = &bat_adc;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		sysled: sys-led {
+			/* 板上 LED 为高电平点亮（GPIO 推高 -> 导通）。
+			 * 代码统一使用 gpio_pin_set_dt() 的逻辑电平，
+			 * 因此这里必须声明 ACTIVE_HIGH：逻辑 1 => 物理高 => LED 亮。
+			 * 若误写成 ACTIVE_LOW，Zephyr 会把电平取反，
+			 * 表现为"连接时常亮的位置是灭的、断开反而亮"。 */
+			gpios = <&gpio0 11 GPIO_ACTIVE_HIGH>;
+			label = "STATUS LED";
+		};
+	};
+};
+
+&reg {
+	regulator-initial-mode = <NRF5X_REG_MODE_DCDC>;
+};
+
+&gpiote {
+	status = "okay";
+};
+
+&gpio0 {
+	status = "okay";
+};
+
+&spi0 {
+	compatible = "nordic,nrf-spim";
+	status = "okay";
+	cs-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;
+	pinctrl-0 = <&spi0_default>;
+	pinctrl-1 = <&spi0_sleep>;
+	pinctrl-names = "default", "sleep";
+
+	epd154d: epd@0 {
+		compatible = "gooddisplay,epd-154d";
+		reg = <0>;
+		spi-max-frequency = <2000000>;
+		dc-gpios = <&gpio0 5 GPIO_ACTIVE_HIGH>;
+		/* GDEM0154F51H RST is active-low (low = reset, high = run).
+		 * Kept in sync with the pre-regression driver which asserted
+		 * reset by driving the pin low and released it by driving high.
+		 */
+		reset-gpios = <&gpio0 4 GPIO_ACTIVE_LOW>;
+		busy-gpios = <&gpio0 3 GPIO_ACTIVE_LOW>;
+		status = "okay";
+	};
+};
+
+&uart0 {
+	status = "disabled";
+};
+
+&adc {
+	status = "okay";
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	bat_adc: channel@0 {
+		reg = <0>;
+		zephyr,gain = "ADC_GAIN_1_6";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,input-positive = <NRF_SAADC_AIN0>;
+		zephyr,resolution = <10>;
+	};
+};
+
+&flash0 {
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		image_partition: partition@0 {
+			label = "image-0";
+			reg = <0x00000000 0x00030000>;
+		};
+	};
+};
