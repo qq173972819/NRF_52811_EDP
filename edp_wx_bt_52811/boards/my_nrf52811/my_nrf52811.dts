@@ -10,7 +10,7 @@
  *   RST:     P0.04
  *   BUSY:    P0.03
  * Status LED:
- *   LED:     P0.11, active low
+ *   LED:     P0.11, active high（高电平点亮）
  */
 
 /dts-v1/;
